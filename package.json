@@ -1,0 +1,14 @@
+{
+  "name": "hometask-kathleen",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "server",
+    "frontend"
+  ],
+  "volta": {
+    "node": "18.20.2"
+  }
+}
