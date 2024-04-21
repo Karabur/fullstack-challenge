@@ -14,22 +14,16 @@ export default function ChangeList() {
   const [expanded, setExpanded] = useState<Set<number>>(new Set())
   const router = useRouter()
 
-  const expand = useCallback(
-    (id: number) => {
-      setExpanded((prev) => new Set(prev.add(id)))
-    },
-    [expanded]
-  )
-  const collapse = useCallback(
-    (id: number) => {
-      setExpanded((prev) => {
-        const next = new Set(prev)
-        next.delete(id)
-        return next
-      })
-    },
-    [expanded]
-  )
+  const expand = useCallback((id: number) => {
+    setExpanded((prev) => new Set(prev.add(id)))
+  }, [])
+  const collapse = useCallback((id: number) => {
+    setExpanded((prev) => {
+      const next = new Set(prev)
+      next.delete(id)
+      return next
+    })
+  }, [])
 
   useEffect(() => {
     setLoading(true)
@@ -42,7 +36,8 @@ export default function ChangeList() {
         //todo: check for 401 error specifically
         router.push('/login')
       })
-  }, [])
+  }, [router])
+
   if (loading) return <p className="text-center text-blue-500">Loading...</p>
 
   return (
@@ -123,7 +118,7 @@ export default function ChangeList() {
             </table>
           </div>
         ) : (
-          <p className="text-gray-600">No changes found.</p>
+          <p className="text-gray-600 text-center">No changes found.</p>
         )}
       </div>
     </div>

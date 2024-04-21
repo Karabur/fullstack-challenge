@@ -1,5 +1,6 @@
 import { Body, Controller, Post, Res, UnauthorizedException } from '@nestjs/common'
 import { Response } from 'express'
+import { omit } from 'lodash'
 import { AppConfigService } from '../config/app-config.service'
 import { AuthService } from './auth.service'
 import { LoginDTO } from './dto'
@@ -19,6 +20,6 @@ export class AuthController {
       httpOnly: true,
       sameSite: 'lax',
     })
-    return user
+    return omit(user, 'password')
   }
 }

@@ -4,7 +4,6 @@ import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Configuration } from './configuration'
 
-
 @Injectable()
 export class AppConfigService implements Configuration {
   constructor(private configService: ConfigService<Configuration, true>) {

@@ -1,7 +1,10 @@
 ### Setup
 - Install dependencies with `yarn install`
 - Run docker-compose with `docker-compose up`
-- Switch to the `server` directory and run `prisma migrate dev` to create the database schema
+- Create `.env` file in the `server` directory with the content copied from `.env.example`.
+- Switch to the `server` directory
+- Run `yarn prisma migrate dev` to create the database schema
+- Run `yarn prisma db seed` to seed the database with initial data
 - Run the server with `yarn start:dev`
 - Server will be running on `http://localhost:3232`
 - Switch to the `frontend` directory and run `yarn dev`
@@ -16,8 +19,12 @@ DB Schema is deliberately made simple, in real life scenario there would be more
 Comments are added in the code to explain some decisions and possible improvements.
 
 ### Environment variables
-Default values are in `.env.development` file in both frontend and server directories.
+#### Frontend
+Default values are in `.env.development`
 Those can be overridden with `.env.development.local` if needed.
+
+#### Backend
+Create `.env` file in the `server` directory with the content copied from `.env.example`.
 
 ### Design patterns and decisions
 Most effort has been put into backend code, as it was the main focus of the task.
