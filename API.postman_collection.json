@@ -1,0 +1,493 @@
+{
+	"info": {
+		"_postman_id": "d1c82f1f-80e0-486d-a030-65c91a787feb",
+		"name": "API",
+		"description": "This collection holds all requests for working with backend server.  \n  \n**Important:**\n\nAs server requires authentication, first request should be 'Login' to obtain session cookie.  \nPostman will automatically use that cookie for all subsequent events.  \n  \nFor now, username and password are hardcoded and match default user in server seed script. That could be impoved with postman variables.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7420929"
+	},
+	"item": [
+		{
+			"name": "Medical Record",
+			"item": [
+				{
+					"name": "Fail tests",
+					"item": [
+						{
+							"name": "Create medical history record fail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 400\", function () {",
+											"  pm.response.to.have.status(400);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.message).to.exist.and.to.be.a('string');",
+											"    pm.expect(responseData.error).to.exist.and.to.be.a('string');",
+											"    pm.expect(responseData.statusCode).to.exist.and.to.be.a('number');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message field is a non-empty string\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message field should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Error field is a non-empty string\", function () {",
+											"  const responseData = pm.response.json();",
+											"",
+											"  pm.expect(responseData.error).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"StatusCode field is a non-negative integer\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.statusCode).to.be.a('number');",
+											"    pm.expect(responseData.statusCode).to.be.at.least(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"condition\": \"Sick\",\n    \"allergies\": [\n        \"peanut\"\n    ],\n    \"surgeries\": []\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/history/record",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"history",
+										"record"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete medical history record fail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 404\", function () {",
+											"  pm.expect(pm.response.code).to.equal(404);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('object');",
+											"  pm.expect(responseData.message).to.exist;",
+											"  pm.expect(responseData.error).to.exist;",
+											"  pm.expect(responseData.statusCode).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is a non-empty string\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Error is a non-empty string\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData.error).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Error should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"StatusCode is a non-negative integer\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.statusCode).to.be.a('number').and.to.be.at.least(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/history/record/9999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"history",
+										"record",
+										"9999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update medical history record fail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 404\", function () {",
+											"  pm.response.to.have.status(404);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that the response has the required fields\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('object');",
+											"  pm.expect(responseData.message).to.exist;",
+											"  pm.expect(responseData.error).to.exist;",
+											"  pm.expect(responseData.statusCode).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Message is a non-empty string\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Error is a non-empty string\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData.error).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Error should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"statusCode is a non-negative integer\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.statusCode).to.exist.and.to.be.a('number');",
+											"    pm.expect(responseData.statusCode).to.be.at.least(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"condition\": \"Sick\",\n    \"allergies\": [\n        \"peanut\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/history/record/9999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"history",
+										"record",
+										"9999"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "This folder contains requests which always fail, and tests for those requests.\n\nCreation test fails since there is no required field\n\nDelete and Update fails as there is no record with specified id. 9999 is used as poor mans non existent value, requires further improvements"
+				},
+				{
+					"name": "List history records",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate that the response code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Validate that the response is json array",
+									"pm.test(\"Response is a json array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/history/list",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"history",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create medical history record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const requestBody=JSON.parse(pm.request.body)",
+									"",
+									"// Validate that the response code should be 200",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// Validate that the response is json object",
+									"pm.test(\"Response is a json object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"",
+									"// Validate that the response has an id property",
+									"pm.test(\"Response to have 'id' property\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('id');",
+									"});",
+									"",
+									"// Validate that the response has proper data",
+									"pm.test(\"Response to have proper data\", function () {",
+									"    pm.expect(pm.response.json().patient).to.eq(requestBody.patient);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"patient\": \"{{$randomFirstName}} {{$randomLastName}}\",\n    \"condition\": \"Sick\",\n    \"allergies\": [\n        \"peanut\"\n    ],\n    \"surgeries\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/history/record",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"history",
+								"record"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete medical history record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/history/record/4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"history",
+								"record",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update medical history record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Allergies is an array\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.allergies).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Surgeries is an array\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.surgeries).to.be.an('array');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"condition\": \"Sick\",\n    \"allergies\": [\n        \"peanut\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/history/record/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"history",
+								"record",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This collection holds api requests to create, modify and update medical records.\n\nRequests in 'Fail tests' folder are fail cases, while requests in collection root are good ones.  \n\nPlease note that delete request will work only once and fail afterwards. I am not sure how to properly handle that, apart from running create request in pre-request script. This requires improvements\n\nList history records returns all records from DB as there is no pagination support on backend at the moment."
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {",
+							"  pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.id).to.exist;",
+							"    pm.expect(responseData.email).to.exist;",
+							"    pm.expect(responseData.name).to.exist;",
+							"    pm.expect(responseData.password).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Email is in a valid format\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, \"Email is not in a valid format\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Password should not be empty\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.password).to.exist.and.to.not.be.empty;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify Content-Type header is set to 'application/json'\", function () {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equal('application/json');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@user.me\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3232"
+		}
+	]
+}
