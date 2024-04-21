@@ -38,6 +38,11 @@ Patterns used:
 ### Testing
 Postman collection is included in the root directory, with some basic tests for all endpoints.
 
+### Git log
+As nestjs creates a git repository on project init, I've had two git root folders during development, which I didn't notice, as IDE handle that seamlessly committing in both.
+For the sake of simplicity I've decided to just drop inner .git folder and add whole backend code in single commit.
+
+
 ### TODO
 Some parts what are crucial to be done, but not implemented:
  - handle DB "not found" errors
