@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      Int                       @id @default(autoincrement())
+  email                   String                    @unique
+  name                    String?
+  password                String
+  MedicalHistoryUpdateLog MedicalHistoryUpdateLog[]
+}
+
+model MedicalHistory {
+  id        Int      @id @default(autoincrement())
+  // That would be reference to Patient model, keep it as simple string for test task
+  patient   String   @unique
+  condition String
+  allergies String[] @default([])
+  surgeries String[] @default([])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UpdateType {
+  Create
+  Update
+  Delete
+}
+
+model MedicalHistoryUpdateLog {
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  type      UpdateType
+  // as an alternative this can be done as model's fields with MTI approach, keeping that for simplicity
+  data      Json?      @db.JsonB()
+  oldData   Json?      @db.JsonB()
+  userId    Int
+  user      User       @relation(fields: [userId], references: [id])
+
+  @@index([data], type: Gin)
+  @@index([oldData], type: Gin)
+}
